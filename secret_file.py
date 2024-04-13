@@ -4,11 +4,12 @@ with open("key.txt", "r") as key:
 
 # Read characters from secret.txt and add them into a single list row by row
 with open("secret.txt", "r") as secret_file:
-    # Concatenate characters from each line to form a single row
-    lista = [char.strip() for line in secret_file for char in line]
+    secret = ''.join(char.strip() for line in secret_file for char in line)
 
-# Write the list into public.txt       
+# Split the secret into chunks of size 'col' to represent each row
+chunks = [secret[i:i+col] for i in range(0, len(secret), col)]
+
+# Write the chunks into public.txt
 with open("public.txt", 'w') as new:
-    # Write the concatenated characters to the file
-    new.write(''.join(lista))
-
+    for chunk in chunks:
+        new.write(chunk + '\n')
